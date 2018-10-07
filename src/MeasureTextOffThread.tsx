@@ -43,7 +43,7 @@ class MeasureTextOffThread extends Component<
   }) => {
     this.setState({
       width: data.width,
-      // not ready to calc height yet render uses fontSize prop instead for now
+      height: data.height,
     });
   };
 
@@ -58,10 +58,7 @@ class MeasureTextOffThread extends Component<
   }
 
   render() {
-    return this.props.children({
-      ...this.state,
-      height: parseFloat(this.props.fontSize), // temp until we calc height on our own
-    });
+    return this.props.children(this.state);
   }
 
   componentWillUnmount() {

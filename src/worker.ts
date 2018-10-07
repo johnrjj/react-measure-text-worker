@@ -1,4 +1,5 @@
-import { measureText } from './util/canvas';
+import { measureText, customMeasureText } from './util/canvas';
+// import { TextMetrics } from './util/canvas-text-measure';
 
 declare var OffscreenCanvas: any; // Too new for typings!
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
@@ -31,9 +32,11 @@ onmessage = (evt: { data: WorkerMessageRequestPayload }) => {
       throw new Error('Not yet implemented');
     case 'CANVAS':
     default:
+      const textMetrics = customMeasureText(canvas, evt.data.text);
       (postMessage as PostMessage)({
         input: evt.data,
-        width: measureText(ctx, evt.data),
+        width: textMetrics.width,
+        height: textMetrics.height,
         workerJobId: messagesProcessedCount,
       } as WorkerMessageResponsePayload);
       return;
