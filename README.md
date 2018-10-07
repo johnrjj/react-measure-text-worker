@@ -37,8 +37,9 @@ We built a declarative React UI component that is able to handle expensive measu
 ```jsx
 import { MeasureTextOffThread } from 'measure-text-off-thread';
 
-// inside render...
 const text = 'measure this text';
+
+// inside render()...
 <MeasureTextOffThread
   text={text}
   fontSize={20}
