@@ -1,18 +1,19 @@
 perf tests http://jsben.ch/2xacl
 
 
+### Architecture
+
 	       ┌───────────┐                                                                                     
 	       │           │                                                                                     
-	       │    App    │                                                                                     
-	       │           │                     thread                                                          
-	       └───────────┘                    boundary                                                         
-	             │                                                                                           
+	       │    App    │                     thread                                                          
+	       │           │                    boundary                                                         
+	       └───────────┘                                                                                     
 	             │                              │                                                            
 	             │                                                                                           
 	             │                              │                                                            
-	             │                                    ┌─────────────────┐                                    
-	             ▼               sendMessage to │     │                 │                                    
-	┌─────────────────────────┐     webworker         │    WebWorker    │                                    
+	             │                postMessage         ┌─────────────────┐                                    
+	             ▼                request to    │     │                 │                                    
+	┌─────────────────────────┐    webworker          │    WebWorker    │                                    
 	│                         │─────────────────┼────▶│    onmessage    │────────────────────┐               
 	│ </MeasureTextOffThread> │◀────────┐             │                 │                    ▼               
 	│                         │         │       │     └─────────────────┘          ┌──────────────────┬─────┐
