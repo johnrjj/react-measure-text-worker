@@ -5,9 +5,7 @@ const METRICS_STRING = '|Éq';
 const BASELINE_SYMBOL = 'M';
 const BASELINE_MULTIPLIER = 1.4;
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
-const context: CanvasRenderingContext2D = canvas.getContext(
-  '2d'
-) as CanvasRenderingContext2D;
+const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
 let fonts: any = {};
 
 export interface TextMetricsState {
@@ -56,40 +54,28 @@ class TextMetrics implements TextMetricsState {
     this.fontProperties = fontProperties;
   }
 
-  /**
-   * Measures the supplied string of text and returns a Rectangle.
-   *
-   * @param {string} text - the text to measure.
-   * @param {PIXI.TextStyle} style - the text style to use for measuring
-   * @param {boolean} [wordWrap] - optional override for if word-wrap should be applied to the text.
-   * @param {HTMLCanvasElement} [canvas] - optional specification of the canvas to use for measuring.
-   * @return {PIXI.TextMetrics} measured width and height of the text.
-   */
   static measureText(
     text: string,
-    style: TextStyle,
+    styleObj: TextStyle,
     wordWrap: boolean,
     canvas: HTMLCanvasElement
   ): TextMetrics {
-    wordWrap =
-      wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
-    const font = style.toFontString();
+    const { style } = styleObj;
+    wordWrap = wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
+    const font = styleObj.toFontString();
     const fontProperties = TextMetrics.measureFont(font);
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     context.font = font;
 
-    const outputText = wordWrap
-      ? TextMetrics.wordWrap(text, style, canvas)
-      : text;
+    const outputText = wordWrap ? TextMetrics.wordWrap(text, style, canvas) : text;
     const lines = outputText.split(/(?:\r\n|\r|\n)/);
     const lineWidths = new Array(lines.length);
     let maxLineWidth = 0;
 
     for (let i = 0; i < lines.length; i++) {
       const lineWidth =
-        context.measureText(lines[i]).width +
-        (lines[i].length - 1) * style.letterSpacing;
+        context.measureText(lines[i]).width + (lines[i].length - 1) * style.letterSpacing;
 
       lineWidths[i] = lineWidth;
       maxLineWidth = Math.max(maxLineWidth, lineWidth);
@@ -100,8 +86,7 @@ class TextMetrics implements TextMetricsState {
       width += style.dropShadowDistance;
     }
 
-    const lineHeight =
-      style.lineHeight || fontProperties.fontSize + style.strokeThickness;
+    const lineHeight = style.lineHeight || fontProperties.fontSize + style.strokeThickness;
     let height =
       Math.max(lineHeight, fontProperties.fontSize + style.strokeThickness) +
       (lines.length - 1) * (lineHeight + style.leading);
@@ -126,20 +111,11 @@ class TextMetrics implements TextMetricsState {
   /**
    * Applies newlines to a string to have it optimally fit into the horizontal
    * bounds set by the Text object's wordWrapWidth property.
-   *
-   * @private
-   * @param {string} text - String to apply word wrapping to
-   * @param {PIXI.TextStyle} style - the style to use when wrapping
-   * @param {HTMLCanvasElement} [canvas] - optional specification of the canvas to use for measuring.
-   * @return {string} New string with new lines applied where required
    */
-  static wordWrap(
-    text: string,
-    style: TextStyle,
-    canvas: HTMLCanvasElement
-  ): string {
+  static wordWrap(text: string, styleObj: TextStyle, canvas: HTMLCanvasElement): string {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
+    const { style } = styleObj;
     let width = 0;
     let line = '';
     let lines = '';
@@ -189,9 +165,7 @@ class TextMetrics implements TextMetricsState {
       if (collapseSpaces) {
         // check both this and the last tokens for spaces
         const currIsBreakingSpace = TextMetrics.isBreakingSpace(token);
-        const lastIsBreakingSpace = TextMetrics.isBreakingSpace(
-          line[line.length - 1]
-        );
+        const lastIsBreakingSpace = TextMetrics.isBreakingSpace(line[line.length - 1]);
 
         if (currIsBreakingSpace && lastIsBreakingSpace) {
           continue;
@@ -199,12 +173,7 @@ class TextMetrics implements TextMetricsState {
       }
 
       // get word width from cache if possible
-      const tokenWidth = TextMetrics.getFromCache(
-        token,
-        letterSpacing,
-        cache,
-        context
-      );
+      const tokenWidth = TextMetrics.getFromCache(token, letterSpacing, cache, context);
 
       // word is longer than desired bounds
       if (tokenWidth > wordWrapWidth) {
@@ -233,15 +202,7 @@ class TextMetrics implements TextMetricsState {
               const lastChar = char[char.length - 1];
 
               // should not split chars
-              if (
-                !TextMetrics.canBreakChars(
-                  lastChar,
-                  nextChar,
-                  token,
-                  j,
-                  style.breakWords
-                )
-              ) {
+              if (!TextMetrics.canBreakChars(lastChar, nextChar, token, j, style.breakWords)) {
                 // combine chars & move forward one
                 char += nextChar;
               } else {
@@ -253,12 +214,7 @@ class TextMetrics implements TextMetricsState {
 
             j += char.length - 1;
 
-            const characterWidth = TextMetrics.getFromCache(
-              char,
-              letterSpacing,
-              cache,
-              context
-            );
+            const characterWidth = TextMetrics.getFromCache(char, letterSpacing, cache, context);
 
             if (characterWidth + width > wordWrapWidth) {
               lines += TextMetrics.addLine(line);
@@ -309,11 +265,7 @@ class TextMetrics implements TextMetricsState {
         }
 
         // don't add spaces to the beginning of lines
-        if (
-          line.length > 0 ||
-          !TextMetrics.isBreakingSpace(token) ||
-          canPrependSpaces
-        ) {
+        if (line.length > 0 || !TextMetrics.isBreakingSpace(token) || canPrependSpaces) {
           // add the word to the current line
           line += token;
 
@@ -328,15 +280,6 @@ class TextMetrics implements TextMetricsState {
     return lines;
   }
 
-  /**
-   * Convienience function for logging each line added during the wordWrap
-   * method
-   *
-   * @private
-   * @param  {string}   line        - The line of text to add
-   * @param  {boolean}  newLine     - Add new line character to end
-   * @return {string}   A formatted line
-   */
   static addLine(line: string, newLine: boolean = true): string {
     line = TextMetrics.trimRight(line);
 
@@ -345,16 +288,6 @@ class TextMetrics implements TextMetricsState {
     return line;
   }
 
-  /**
-   * Gets & sets the widths of calculated characters in a cache object
-   *
-   * @private
-   * @param  {string}                    key            The key
-   * @param  {number}                    letterSpacing  The letter spacing
-   * @param  {object}                    cache          The cache
-   * @param  {CanvasRenderingContext2D}  context        The canvas context
-   * @return {number}                    The from cache.
-   */
   static getFromCache(
     key: string,
     letterSpacing: number,
@@ -365,68 +298,38 @@ class TextMetrics implements TextMetricsState {
 
     if (width === undefined) {
       const spacing = key.length * letterSpacing;
-
       width = context.measureText(key).width + spacing;
       cache[key] = width;
     }
-
     return width;
   }
 
-  /**
-   * Determines whether we should collapse breaking spaces
-   *
-   * @private
-   * @param  {string}   whiteSpace  The TextStyle property whiteSpace
-   * @return {boolean}  should collapse
-   */
+  // Determines whether we should collapse breaking spaces
   static collapseSpaces(whiteSpace: string): boolean {
     return whiteSpace === 'normal' || whiteSpace === 'pre-line';
   }
 
-  /**
-   * Determines whether we should collapse newLine chars
-   *
-   * @private
-   * @param  {string}   whiteSpace  The white space
-   * @return {boolean}  should collapse
-   */
+  // Determines whether we should collapse newLine chars
   static collapseNewlines(whiteSpace: string): boolean {
     return whiteSpace === 'normal';
   }
 
-  /**
-   * trims breaking whitespaces from string
-   *
-   * @private
-   * @param  {string}  text  The text
-   * @return {string}  trimmed string
-   */
+  // trims breaking whitespaces from string
   static trimRight(text: string): string {
     if (typeof text !== 'string') {
       return '';
     }
-
     for (let i = text.length - 1; i >= 0; i--) {
       const char = text[i];
-
       if (!TextMetrics.isBreakingSpace(char)) {
         break;
       }
-
       text = text.slice(0, -1);
     }
-
     return text;
   }
 
-  /**
-   * Determines if char is a newline.
-   *
-   * @private
-   * @param  {string}  char  The character
-   * @return {boolean}  True if newline, False otherwise.
-   */
+  // Determines if char is a newline.
   static isNewline(char: string): boolean {
     if (typeof char !== 'string') {
       return false;
@@ -435,13 +338,7 @@ class TextMetrics implements TextMetricsState {
     return NEW_LINES.indexOf(char.charCodeAt(0)) >= 0;
   }
 
-  /**
-   * Determines if char is a breaking whitespace.
-   *
-   * @private
-   * @param  {string}  char  The character
-   * @return {boolean}  True if whitespace, False otherwise.
-   */
+  // Determines if char is a breaking whitespace.
   static isBreakingSpace(char: string): boolean {
     if (typeof char !== 'string') {
       return false;
@@ -449,13 +346,7 @@ class TextMetrics implements TextMetricsState {
     return BREAKING_SPACES.indexOf(char.charCodeAt(0)) >= 0;
   }
 
-  /**
-   * Splits a string into words, breaking-spaces and newLine characters
-   *
-   * @private
-   * @param  {string}  text       The text
-   * @return {array}  A tokenized array
-   */
+  // Splits a string into words, breaking-spaces and newLine characters
   static tokenize(text: string): Array<any> {
     const tokens: Array<any> = [];
     let token: string = '';
@@ -466,18 +357,14 @@ class TextMetrics implements TextMetricsState {
 
     for (let i = 0; i < text.length; i++) {
       const char = text[i];
-
       if (TextMetrics.isBreakingSpace(char) || TextMetrics.isNewline(char)) {
         if (token !== '') {
           tokens.push(token);
           token = '';
         }
-
         tokens.push(char);
-
         continue;
       }
-
       token += char;
     }
 
@@ -542,10 +429,6 @@ class TextMetrics implements TextMetricsState {
     }
 
     const properties: any = {};
-
-    // const canvas = canvas;
-    // const context = context;
-
     context.font = font;
 
     const metricsString = METRICS_STRING + BASELINE_SYMBOL;

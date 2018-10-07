@@ -16,8 +16,7 @@ const Highlight = ({ styleOverides, width, height }) => (
       height: `${height || 0}`,
       willChange: 'width',
       border: 'none',
-      transform: `translate(calc(-50% + ${width / 2}px), calc(-50% + ${height /
-        2}px))`,
+      transform: `translate(calc(-50% + ${width / 2}px), calc(-50% + ${height / 2}px))`,
       // transform: perspective(1px) translateY(-50%);
 
       // transform: `translateY(calc(-50%))`,
@@ -28,11 +27,9 @@ const Highlight = ({ styleOverides, width, height }) => (
       // padding: `${height / 4}px ${height / 8}px ${height / 4}px`,
       // margin: `-${height / 4}px -${(height) / 8}px`,
       borderRadius: '4px',
-      boxShadow:
-        '0 4px 8px -1px rgba(0,32,128,.2), 0 8px 24px -2px rgba(0,128,255,.1)',
+      boxShadow: '0 4px 8px -1px rgba(0,32,128,.2), 0 8px 24px -2px rgba(0,128,255,.1)',
       fontSize: '20px',
-      transition:
-        'width 0.007s, height 0.1s, background-color 2s, transform 0.007s',
+      transition: 'width 0.007s, height 0.1s, background-color 2s, transform 0.007s',
       // transitionTimingFunction: 'cubic-bezier(.11,.84,.49,.97)',
       transitionTimingFunction: 'cubic-bezier(.2,.74,.66,.52)',
       outline: '0',
@@ -52,8 +49,8 @@ const Tooltip = ({ width, height }) => (
       width: '200px',
       height: '50px',
       opacity: 0.28,
-      transform: `translate(calc(-50% + ${width / 2}px), calc(-50% - ${height /
-        2}px - ${height + TOOLTIP_OFFSET}px))`,
+      transform: `translate(calc(-50% + ${width / 2}px), calc(-50% - ${height / 2}px - ${height +
+        TOOLTIP_OFFSET}px))`,
       transition: 'width 2s, height 2s, background-color 2s, transform 0.5s',
       // http://cubic-bezier.com/#.11,.84,.49,.97
       transitionTimingFunction: 'cubic-bezier(.25,.75,.5,1.25)',
@@ -72,10 +69,7 @@ const Container = ({ children, ...rest }) => (
 );
 
 const Content = ({ children, style, ...rest }) => (
-  <span
-    style={{ display: 'inline-block', position: 'relative', ...style }}
-    {...rest}
-  >
+  <span style={{ display: 'inline-block', position: 'relative', ...style }} {...rest}>
     {children}
   </span>
 );

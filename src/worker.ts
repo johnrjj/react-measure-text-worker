@@ -33,6 +33,7 @@ onmessage = (evt: { data: WorkerMessageRequestPayload }) => {
     case 'CANVAS':
     default:
       const textMetrics = customMeasureText(canvas, evt.data.text);
+      console.log(textMetrics);
       (postMessage as PostMessage)({
         input: evt.data,
         width: textMetrics.width,
