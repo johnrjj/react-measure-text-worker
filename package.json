@@ -7,7 +7,7 @@
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html",
-    "prettier": "prettier --single-quote --print-width 100 --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css}'"
+    "prettier": "prettier --single-quote --print-width 80 --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css}'"
   },
   "devDependencies": {
     "@types/react": "^16.4.15",

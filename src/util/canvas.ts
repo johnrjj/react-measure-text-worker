@@ -11,7 +11,11 @@ function measureText(
 
 function customMeasureText(
   canvas: HTMLCanvasElement,
-  { text, fontFamily, fontSize }: { text: string; fontFamily: string; fontSize: string }
+  {
+    text,
+    fontFamily,
+    fontSize,
+  }: { text: string; fontFamily: string; fontSize: string }
 ) {
   const style = new TextStyle({
     fontFamily,

@@ -5,19 +5,21 @@ const BASELINE_SYMBOL = 'M';
 const BASELINE_MULTIPLIER = 1.4;
 
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
-const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
+const context: CanvasRenderingContext2D = canvas.getContext(
+  '2d'
+) as CanvasRenderingContext2D;
 let fonts: any = {};
 
 export interface ITextMetrics {
-  text: string; // the text that was measured
-  style: TextStyle; // the style that was measured
-  width: number; // the measured width of the text
-  height: number; // the measured height of the text
+  text: string; // text that was measured
+  style: TextStyle; // style that was measured
+  width: number; // measured width of the text
+  height: number; // measured height of the text
   lines: Array<any>; // an array of the lines of text broken by new lines and wrapping if specified in style
   lineWidths: Array<any>; // an array of the line widths for each line matched to `lines`
-  lineHeight: number; // the measured line height for this style
-  maxLineWidth: number; // the maximum line width for all measured lines
-  fontProperties: any; //  the font properties object from TextMetrics.measureFont
+  lineHeight: number; // measured line height for this style
+  maxLineWidth: number; // maximum line width for all measured lines
+  fontProperties: any; // font properties object from TextMetrics.measureFont
 }
 
 // Based on TextMetrics in Pixi.js's Canvas Engine
@@ -41,21 +43,25 @@ class TextMetrics implements ITextMetrics {
     canvas: HTMLCanvasElement
   ): TextMetrics {
     const { style } = styleObj;
-    wordWrap = wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
+    wordWrap =
+      wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
     const font = styleObj.toFontString();
     const fontProperties = TextMetrics.measureFont(font);
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     context.font = font;
 
-    const outputText = wordWrap ? TextMetrics.wordWrap(text, style, canvas) : text;
+    const outputText = wordWrap
+      ? TextMetrics.wordWrap(text, style, canvas)
+      : text;
     const lines = outputText.split(/(?:\r\n|\r|\n)/);
     const lineWidths = new Array(lines.length);
     let maxLineWidth = 0;
 
     for (let i = 0; i < lines.length; i++) {
       const lineWidth =
-        context.measureText(lines[i]).width + (lines[i].length - 1) * style.letterSpacing;
+        context.measureText(lines[i]).width +
+        (lines[i].length - 1) * style.letterSpacing;
 
       lineWidths[i] = lineWidth;
       maxLineWidth = Math.max(maxLineWidth, lineWidth);
@@ -66,7 +72,8 @@ class TextMetrics implements ITextMetrics {
       width += style.dropShadowDistance;
     }
 
-    const lineHeight = style.lineHeight || fontProperties.fontSize + style.strokeThickness;
+    const lineHeight =
+      style.lineHeight || fontProperties.fontSize + style.strokeThickness;
     let height =
       Math.max(lineHeight, fontProperties.fontSize + style.strokeThickness) +
       (lines.length - 1) * (lineHeight + style.leading);
@@ -92,7 +99,11 @@ class TextMetrics implements ITextMetrics {
    * Applies newlines to a string to have it optimally fit into the horizontal
    * bounds set by the Text object's wordWrapWidth property.
    */
-  static wordWrap(text: string, styleObj: TextStyle, canvas: HTMLCanvasElement): string {
+  static wordWrap(
+    text: string,
+    styleObj: TextStyle,
+    canvas: HTMLCanvasElement
+  ): string {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     const { style } = styleObj;
@@ -145,7 +156,9 @@ class TextMetrics implements ITextMetrics {
       if (collapseSpaces) {
         // check both this and the last tokens for spaces
         const currIsBreakingSpace = TextMetrics.isBreakingSpace(token);
-        const lastIsBreakingSpace = TextMetrics.isBreakingSpace(line[line.length - 1]);
+        const lastIsBreakingSpace = TextMetrics.isBreakingSpace(
+          line[line.length - 1]
+        );
 
         if (currIsBreakingSpace && lastIsBreakingSpace) {
           continue;
@@ -153,7 +166,12 @@ class TextMetrics implements ITextMetrics {
       }
 
       // get word width from cache if possible
-      const tokenWidth = TextMetrics.getFromCache(token, letterSpacing, cache, context);
+      const tokenWidth = TextMetrics.getFromCache(
+        token,
+        letterSpacing,
+        cache,
+        context
+      );
 
       // word is longer than desired bounds
       if (tokenWidth > wordWrapWidth) {
@@ -182,7 +200,15 @@ class TextMetrics implements ITextMetrics {
               const lastChar = char[char.length - 1];
 
               // should not split chars
-              if (!TextMetrics.canBreakChars(lastChar, nextChar, token, j, style.breakWords)) {
+              if (
+                !TextMetrics.canBreakChars(
+                  lastChar,
+                  nextChar,
+                  token,
+                  j,
+                  style.breakWords
+                )
+              ) {
                 // combine chars & move forward one
                 char += nextChar;
               } else {
@@ -194,7 +220,12 @@ class TextMetrics implements ITextMetrics {
 
             j += char.length - 1;
 
-            const characterWidth = TextMetrics.getFromCache(char, letterSpacing, cache, context);
+            const characterWidth = TextMetrics.getFromCache(
+              char,
+              letterSpacing,
+              cache,
+              context
+            );
 
             if (characterWidth + width > wordWrapWidth) {
               lines += TextMetrics.addLine(line);
@@ -245,7 +276,11 @@ class TextMetrics implements ITextMetrics {
         }
 
         // don't add spaces to the beginning of lines
-        if (line.length > 0 || !TextMetrics.isBreakingSpace(token) || canPrependSpaces) {
+        if (
+          line.length > 0 ||
+          !TextMetrics.isBreakingSpace(token) ||
+          canPrependSpaces
+        ) {
           // add the word to the current line
           line += token;
 
