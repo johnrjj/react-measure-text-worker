@@ -12,7 +12,7 @@ export interface WorkerMessageResponsePayload {
 
 export type PostMessage = (data: WorkerMessageResponsePayload) => void;
 
-export type MessageTypes = 'CANVAS' | 'GET__BOUNDING_CLIENT_RECT';
+export type MessageTypes = 'CANVAS' | 'GET_BOUNDING_CLIENT_RECT';
 
 export interface WorkerMessageRequestPayload {
   text: string;
@@ -29,7 +29,7 @@ onmessage = (msg: WorkerMessageRequest) => {
   messagesProcessedCount++;
   const { data } = msg;
   switch (data.type) {
-    case 'GET__BOUNDING_CLIENT_RECT':
+    case 'GET_BOUNDING_CLIENT_RECT':
       throw new Error('Not yet implemented');
     case 'CANVAS':
     default:
