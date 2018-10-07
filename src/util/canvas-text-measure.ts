@@ -1,14 +1,14 @@
 import { TextStyle } from './canvas-text-style';
 
-declare var OffscreenCanvas: any; // Too new for typings!
 const METRICS_STRING = '|Éq';
 const BASELINE_SYMBOL = 'M';
 const BASELINE_MULTIPLIER = 1.4;
+
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
 const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
 let fonts: any = {};
 
-export interface TextMetricsState {
+export interface ITextMetrics {
   text: string;
   style: TextStyle;
   width: number;
@@ -20,7 +20,7 @@ export interface TextMetricsState {
   fontProperties: any;
 }
 
-class TextMetrics implements TextMetricsState {
+class TextMetrics implements ITextMetrics {
   /**
    * @param {string} text - the text that was measured
    * @param {PIXI.TextStyle} style - the style that was measured

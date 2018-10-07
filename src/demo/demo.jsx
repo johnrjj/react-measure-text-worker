@@ -17,20 +17,15 @@ const Highlight = ({ styleOverides, width, height }) => (
       willChange: 'width',
       border: 'none',
       transform: `translate(calc(-50% + ${width / 2}px), calc(-50% + ${height / 2}px))`,
-      // transform: perspective(1px) translateY(-50%);
-
-      // transform: `translateY(calc(-50%))`,
       background: 'linear-gradient(135deg,#73a5ff,#5477f5) no-repeat',
       color: '#fff',
       padding: '5px 3px',
-      // margin: '-8px',
-      // padding: `${height / 4}px ${height / 8}px ${height / 4}px`,
+      // padding: `${height / 4}px ${height / 8}px`,
       // margin: `-${height / 4}px -${(height) / 8}px`,
       borderRadius: '4px',
       boxShadow: '0 4px 8px -1px rgba(0,32,128,.2), 0 8px 24px -2px rgba(0,128,255,.1)',
       fontSize: '20px',
       transition: 'width 0.007s, height 0.1s, background-color 2s, transform 0.007s',
-      // transitionTimingFunction: 'cubic-bezier(.11,.84,.49,.97)',
       transitionTimingFunction: 'cubic-bezier(.2,.74,.66,.52)',
       outline: '0',
       willChange: 'opacity',
@@ -93,15 +88,6 @@ class Demo extends Component {
             value={this.state.inputText}
             onChange={e => this.setState({ inputText: e.target.value })}
           />
-          {/* <label htmlFor="fontSize">Font Size {`(${fontSize})`}</label>
-          <input
-            type="range"
-            name="fontSize"
-            min="16"
-            max="48"
-            value={this.state.fontSizeText}
-            onChange={e => this.setState({ fontSizeText: e.target.value })}
-          /> */}
         </div>
         <div style={{ marginBottom: '128px' }}>
           <span>before </span>

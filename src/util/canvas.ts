@@ -9,7 +9,7 @@ function measureText(
   return ctx.measureText(text);
 }
 
-function customMeasureText(canvas: HTMLCanvasElement, text: string) {
+function customMeasureText(canvas: HTMLCanvasElement, { text }: { text: string }) {
   const style = new TextStyle({
     fontFamily: 'Lato',
     fontSize: 20,
