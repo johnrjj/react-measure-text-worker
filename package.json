@@ -7,6 +7,7 @@
   "scripts": {
     "start": "parcel index.html --open",
     "build": "parcel build index.html",
+    "build:lib": "parcel build src/index.ts",
     "prettier": "prettier --single-quote --print-width 100 --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css}'"
   },
   "devDependencies": {
