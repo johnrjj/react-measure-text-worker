@@ -65,7 +65,8 @@ class MeasureTextOffThread extends Component<MeasureTextOffThreadProps, MeasureT
     worker.postMessage({
       id: workerMessageCounter++,
       text: this.props.text,
-      font: `${this.props.fontSize} ${this.props.fontFamily}`,
+      fontFamily: this.props.fontFamily,
+      fontSize: this.props.fontSize,
     });
   }
 }

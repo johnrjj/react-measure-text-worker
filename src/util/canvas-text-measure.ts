@@ -9,29 +9,19 @@ const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRende
 let fonts: any = {};
 
 export interface ITextMetrics {
-  text: string;
-  style: TextStyle;
-  width: number;
-  height: number;
-  lines: Array<any>;
-  lineWidths: Array<any>;
-  lineHeight: number;
-  maxLineWidth: number;
-  fontProperties: any;
+  text: string; // the text that was measured
+  style: TextStyle; // the style that was measured
+  width: number; // the measured width of the text
+  height: number; // the measured height of the text
+  lines: Array<any>; // an array of the lines of text broken by new lines and wrapping if specified in style
+  lineWidths: Array<any>; // an array of the line widths for each line matched to `lines`
+  lineHeight: number; // the measured line height for this style
+  maxLineWidth: number; // the maximum line width for all measured lines
+  fontProperties: any; //  the font properties object from TextMetrics.measureFont
 }
 
+// Based on TextMetrics in Pixi.js's Canvas Engine
 class TextMetrics implements ITextMetrics {
-  /**
-   * @param {string} text - the text that was measured
-   * @param {PIXI.TextStyle} style - the style that was measured
-   * @param {number} width - the measured width of the text
-   * @param {number} height - the measured height of the text
-   * @param {array} lines - an array of the lines of text broken by new lines and wrapping if specified in style
-   * @param {array} lineWidths - an array of the line widths for each line matched to `lines`
-   * @param {number} lineHeight - the measured line height for this style
-   * @param {number} maxLineWidth - the maximum line width for all measured lines
-   * @param {Object} fontProperties - the font properties object from TextMetrics.measureFont
-   */
   constructor(
     public text: string,
     public style: TextStyle,
@@ -42,17 +32,7 @@ class TextMetrics implements ITextMetrics {
     public lineHeight: number,
     public maxLineWidth: number,
     public fontProperties: any
-  ) {
-    this.text = text;
-    this.style = style;
-    this.width = width;
-    this.height = height;
-    this.lines = lines;
-    this.lineWidths = lineWidths;
-    this.lineHeight = lineHeight;
-    this.maxLineWidth = maxLineWidth;
-    this.fontProperties = fontProperties;
-  }
+  ) {}
 
   static measureText(
     text: string,
@@ -282,9 +262,7 @@ class TextMetrics implements ITextMetrics {
 
   static addLine(line: string, newLine: boolean = true): string {
     line = TextMetrics.trimRight(line);
-
     line = newLine ? `${line}\n` : line;
-
     return line;
   }
 
@@ -334,7 +312,6 @@ class TextMetrics implements ITextMetrics {
     if (typeof char !== 'string') {
       return false;
     }
-
     return NEW_LINES.indexOf(char.charCodeAt(0)) >= 0;
   }
 
@@ -367,67 +344,32 @@ class TextMetrics implements ITextMetrics {
       }
       token += char;
     }
-
     if (token !== '') {
       tokens.push(token);
     }
-
     return tokens;
   }
 
-  /**
-   * This method exists to be easily overridden
-   * It allows one to customise which words should break
-   * Examples are if the token is CJK or numbers.
-   * It must return a boolean.
-   *
-   * @private
-   * @param  {string}  token       The token
-   * @param  {boolean}  breakWords  The style attr break words
-   * @return {boolean} whether to break word or not
-   */
   static canBreakWords(token: string, breakWords: boolean): boolean {
     return breakWords;
   }
 
-  /**
-   * This method exists to be easily overridden
-   * It allows one to determine whether a pair of characters
-   * should be broken by newlines
-   * For example certain characters in CJK langs or numbers.
-   * It must return a boolean.
-   *
-   * @private
-   * @param  {string}  char      The character
-   * @param  {string}  nextChar  The next character
-   * @param  {string}  token     The token/word the characters are from
-   * @param  {number}  index     The index in the token of the char
-   * @param  {boolean}  breakWords  The style attr break words
-   * @return {boolean} whether to break word or not
-   */
   static canBreakChars(
-    char: string,
-    nextChar: string,
-    token: string,
-    index: number,
-    breakWords: boolean // eslint-disable-line no-unused-vars
+    char: string, // cur chat
+    nextChar: string, // next char
+    token: string, // token/word the characters are from
+    index: number, // index in the token of the char
+    breakWords: boolean // style attr break words
   ): boolean {
     return true;
   }
 
-  /**
-   * Calculates the ascent, descent and fontSize of a given font-style
-   *
-   * @static
-   * @param {string} font - String representing the style of the font
-   * @return {PIXI.TextMetrics~FontMetrics} Font properties object
-   */
+  // Calculates the ascent, descent and fontSize of a given font-style
   static measureFont(font: string) {
     // as this method is used for preparing assets, don't recalculate things if we don't need to
     if (fonts[font]) {
       return fonts[font];
     }
-
     const properties: any = {};
     context.font = font;
 
@@ -493,27 +435,12 @@ class TextMetrics implements ITextMetrics {
         break;
       }
     }
-
     properties.descent = i - baseline;
     properties.fontSize = properties.ascent + properties.descent;
 
     fonts[font] = properties;
 
     return properties;
-  }
-
-  /**
-   * Clear font metrics in metrics cache.
-   *
-   * @static
-   * @param {string} [font] - font name. If font name not set then clear cache for all fonts.
-   */
-  static clearMetrics(font: string = ''): void {
-    if (font) {
-      delete fonts[font];
-    } else {
-      fonts = {};
-    }
   }
 }
 

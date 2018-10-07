@@ -4,14 +4,14 @@ import { MeasureTextOffThread } from '../MeasureTextOffThread.tsx';
 import './reset.css';
 import './styles.css';
 
-const Highlight = ({ styleOverides, width, height }) => (
+const Highlight = ({ width, height }) => (
   <div
     style={{
       position: 'absolute',
       backgroundColor: 'yellow',
       opacity: 0.5,
       width: `${width || 0}px`,
-      bottom: '-8px',
+      bottom: '-10px',
       left: 0,
       height: `${height || 0}`,
       willChange: 'width',
@@ -29,7 +29,6 @@ const Highlight = ({ styleOverides, width, height }) => (
       transitionTimingFunction: 'cubic-bezier(.2,.74,.66,.52)',
       outline: '0',
       willChange: 'opacity',
-      ...styleOverides,
     }}
   />
 );

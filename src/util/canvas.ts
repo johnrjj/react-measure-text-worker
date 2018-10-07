@@ -9,10 +9,13 @@ function measureText(
   return ctx.measureText(text);
 }
 
-function customMeasureText(canvas: HTMLCanvasElement, { text }: { text: string }) {
+function customMeasureText(
+  canvas: HTMLCanvasElement,
+  { text, fontFamily, fontSize }: { text: string; fontFamily: string; fontSize: string }
+) {
   const style = new TextStyle({
-    fontFamily: 'Lato',
-    fontSize: 20,
+    fontFamily,
+    fontSize,
   });
   return TextMetrics.measureText(text, style, false, canvas);
 }
