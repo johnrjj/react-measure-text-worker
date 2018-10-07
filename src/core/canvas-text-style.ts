@@ -1,15 +1,4 @@
 const defaultStyle = {
-  // align: 'left',
-  // breakWords: false,
-  // dropShadow: false,
-  // dropShadowAlpha: 1,
-  // dropShadowAngle: Math.PI / 6,
-  // dropShadowBlur: 0,
-  // dropShadowColor: 'black',
-  // dropShadowDistance: 5,
-  // fill: 'black',
-  // fillGradientType: 0,
-  // fillGradientStops: [],
   fontFamily: 'Arial',
   fontSize: 20,
   fontStyle: 'normal',
@@ -17,16 +6,9 @@ const defaultStyle = {
   fontWeight: 'normal',
   letterSpacing: 0,
   lineHeight: 0,
-  // lineJoin: 'miter',
-  // miterLimit: 10,
   padding: 0,
-  // stroke: 'black',
   strokeThickness: 0,
-  // textBaseline: 'alphabetic',
-  // trim: false,
   whiteSpace: 'pre',
-  // wordWrap: false,
-  // wordWrapWidth: 100,
   leading: 0,
 };
 
@@ -76,3 +58,26 @@ class TextStyle {
 }
 
 export { TextStyle };
+
+// TODO: need to refactor into interface
+// TODO: figure out if any others are needed for MVP
+const unusedStyles = {
+  align: 'left',
+  breakWords: false,
+  dropShadow: false,
+  dropShadowAlpha: 1,
+  dropShadowAngle: Math.PI / 6,
+  dropShadowBlur: 0,
+  dropShadowColor: 'black',
+  dropShadowDistance: 5,
+  fill: 'black',
+  fillGradientType: 0,
+  fillGradientStops: [],
+  lineJoin: 'miter',
+  miterLimit: 10,
+  stroke: 'black',
+  textBaseline: 'alphabetic',
+  trim: false,
+  wordWrap: false,
+  wordWrapWidth: 100,
+};
