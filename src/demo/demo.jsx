@@ -11,7 +11,7 @@ const Highlight = ({ styleOverides, width, height }) => (
       backgroundColor: 'yellow',
       opacity: 0.5,
       width: `${width || 0}px`,
-      bottom: '-50%',
+      bottom: '-8px',
       left: 0,
       height: `${height || 0}`,
       willChange: 'width',
@@ -23,10 +23,10 @@ const Highlight = ({ styleOverides, width, height }) => (
       // transform: `translateY(calc(-50%))`,
       background: 'linear-gradient(135deg,#73a5ff,#5477f5) no-repeat',
       color: '#fff',
-      // padding: '8px',
+      padding: '5px 3px',
       // margin: '-8px',
-      padding: `${height / 4}px ${height / 8}px ${height / 4}px`,
-      margin: `${height / 4}px -${(height * 0) / 8}px`,
+      // padding: `${height / 4}px ${height / 8}px ${height / 4}px`,
+      // margin: `-${height / 4}px -${(height) / 8}px`,
       borderRadius: '4px',
       boxShadow:
         '0 4px 8px -1px rgba(0,32,128,.2), 0 8px 24px -2px rgba(0,128,255,.1)',
@@ -45,9 +45,9 @@ const Highlight = ({ styleOverides, width, height }) => (
 const TOOLTIP_OFFSET = 40;
 const Tooltip = ({ width, height }) => (
   <div
-    class="tooltip"
+    className="tooltip"
     style={{
-      fontSize: '16px',
+      fontSize: '20px',
       position: 'absolute',
       width: '200px',
       height: '50px',
@@ -61,7 +61,7 @@ const Tooltip = ({ width, height }) => (
     }}
   >
     Tooltip
-    <div class="tooltip__arrow" />
+    <div className="tooltip__arrow" />
   </div>
 );
 
@@ -72,12 +72,12 @@ const Container = ({ children, ...rest }) => (
 );
 
 const Content = ({ children, style, ...rest }) => (
-  <pre
+  <span
     style={{ display: 'inline-block', position: 'relative', ...style }}
     {...rest}
   >
     {children}
-  </pre>
+  </span>
 );
 
 class Demo extends Component {
@@ -85,21 +85,21 @@ class Demo extends Component {
     super(props);
     this.state = {
       inputText: 'as you type, it will calculate highlight and tooltip',
-      fontSizeText: '16',
+      fontSizeText: '20',
     };
   }
   render() {
     const fontSize = `${this.state.fontSizeText}px`;
-    const fontFamily = 'Roboto';
+    const fontFamily = 'Lato';
 
     return (
-      <div style={{ marginTop: '16px', marginLeft: '128px' }}>
+      <div style={{ fontSize, marginTop: '20px', marginLeft: '128px' }}>
         <div style={{ marginBottom: '128px' }}>
           <input
             value={this.state.inputText}
             onChange={e => this.setState({ inputText: e.target.value })}
           />
-          <label htmlFor="fontSize">Font Size {`(${fontSize})`}</label>
+          {/* <label htmlFor="fontSize">Font Size {`(${fontSize})`}</label>
           <input
             type="range"
             name="fontSize"
@@ -107,7 +107,7 @@ class Demo extends Component {
             max="48"
             value={this.state.fontSizeText}
             onChange={e => this.setState({ fontSizeText: e.target.value })}
-          />
+          /> */}
         </div>
         <div style={{ marginBottom: '128px' }}>
           <span>before </span>
