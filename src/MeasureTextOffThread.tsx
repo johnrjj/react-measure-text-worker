@@ -60,13 +60,14 @@ class MeasureTextOffThread extends Component<MeasureTextOffThreadProps, MeasureT
   }
 
   private measure() {
+    const { text, fontFamily, fontSize } = this.props;
     // FIFO MessagePort queue implicitly created when worker is created
     // http://www.w3.org/TR/2015/WD-workers-20150924/#communicating-with-a-dedicated-worker
     worker.postMessage({
       id: workerMessageCounter++,
-      text: this.props.text,
-      fontFamily: this.props.fontFamily,
-      fontSize: this.props.fontSize,
+      text,
+      fontFamily,
+      fontSize,
     });
   }
 }
