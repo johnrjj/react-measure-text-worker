@@ -54,8 +54,6 @@ const text = 'measure this text';
 ```
 
 
-
-
 ## Architecture
 
 	       ┌───────────┐                                                                                     
@@ -82,6 +80,6 @@ const text = 'measure this text';
 	             ▼                              │  │                           │       send response         
 	┌─────────────────────────┐                    └───────────────────────────┘      payload to bus         
 	│                         │                 │                                                            
-	│          span           │                                                                              
+	│        children         │                                                                              
 	│                         │                 │                                                            
 	└─────────────────────────┘                                                                              
