@@ -41,6 +41,7 @@ class MeasureTextOffThread extends Component<
   }: {
     data: WorkerMessageResponsePayload;
   }) => {
+    // todo: if no requests in flight, stop listening to worker messages
     this.setState({
       width: data.width,
       height: data.height,
@@ -66,9 +67,8 @@ class MeasureTextOffThread extends Component<
   }
 
   private measure() {
-    // MessagePort queue implicitly created when worker is (if worried about multiple msgs)
+    // FIFO MessagePort queue implicitly created when worker is created
     // http://www.w3.org/TR/2015/WD-workers-20150924/#communicating-with-a-dedicated-worker
-    // Messages will also FIFO, don't need to worry about ordering
     worker.postMessage({
       id: workerMessageCounter++,
       text: this.props.text,
