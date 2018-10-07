@@ -1,0 +1,1 @@
+perf tests http://jsben.ch/2xacl

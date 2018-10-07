@@ -1,0 +1,36 @@
+body {
+  background: #efefef;
+}
+
+.tooltip {
+  height: 200px;
+  width: 300px;
+  position: absolute;
+  background: white;
+  box-shadow: 0px 5px 15px 0px rgba(0, 0, 0, 0.3);
+  transition: width 2s, height 2s, background-color 2s, transfom 1.25s;
+}
+
+.tooltip__arrow {
+  width: 50px;
+  height: 25px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  transition: width 2s, height 2s, background-color 2s, transfom 1.25s;
+}
+
+.tooltip__arrow::after {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: white;
+  transform: translateX(-50%) translateY(-50%) rotate(45deg);
+  top: 0;
+  left: 50%;
+  box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
+  transition: width 2s, height 2s, background-color 2s, transfom 1.25s;
+}
