@@ -1,7 +1,7 @@
 import { TextMetrics } from './canvas-text-measure';
 import { TextStyle } from './canvas-text-style';
 
-function measureText(
+function builtInMeasureText(
   ctx: CanvasRenderingContext2D,
   { text, font }: { text: string; font: string }
 ) {
@@ -9,7 +9,7 @@ function measureText(
   return ctx.measureText(text);
 }
 
-function customMeasureText(
+function measureText(
   canvas: HTMLCanvasElement,
   {
     text,
@@ -24,4 +24,4 @@ function customMeasureText(
   return TextMetrics.measureText(text, style, false, canvas);
 }
 
-export { measureText, customMeasureText };
+export { builtInMeasureText, measureText };

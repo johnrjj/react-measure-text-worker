@@ -1,4 +1,4 @@
-import { measureText, customMeasureText } from './util/canvas';
+import { measureText } from './util/canvas';
 
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
 let messagesProcessedCount = 0;
@@ -33,7 +33,7 @@ onmessage = (msg: WorkerMessageRequest) => {
       throw new Error('Not yet implemented');
     case 'CANVAS':
     default:
-      const textMetrics = customMeasureText(canvas, data);
+      const textMetrics = measureText(canvas, data);
       (postMessage as PostMessage)({
         input: data,
         width: textMetrics.width,
