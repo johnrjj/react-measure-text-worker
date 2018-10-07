@@ -3,7 +3,7 @@
 
 ### TL;DR
 
-A React component that can do expensive text measurements off the main thread and return results to the component's children.
+A React component that does expensive text measurements off the main thread and return results to the component's children.
 
 ### Context
 
