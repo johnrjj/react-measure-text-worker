@@ -1,3 +1,3 @@
 import { MeasureTextOffThread } from './MeasureTextOffThread';
 
-export { MeasureTextOffThread }
+export { MeasureTextOffThread };

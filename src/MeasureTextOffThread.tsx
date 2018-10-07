@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { LruCache } from './util/lru-cache';
+import { LruCache } from './core/lru-cache';
 import { WorkerMessageResponsePayload } from './worker';
 
 const worker = new Worker('worker.ts');

@@ -1,4 +1,4 @@
-import { measureText } from './util/canvas';
+import { measureText } from './core/canvas';
 
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
 let messagesProcessedCount = 0;
@@ -12,7 +12,7 @@ export interface WorkerMessageResponsePayload {
 
 export type PostMessage = (data: WorkerMessageResponsePayload) => void;
 
-export type MessageTypes = 'CANVAS' | 'GET_BOUNDING_CLIENT_RECT';
+export type MessageTypes = 'CANVAS_MEASURE';
 
 export interface WorkerMessageRequestPayload {
   text: string;
@@ -29,9 +29,7 @@ onmessage = (msg: WorkerMessageRequest) => {
   messagesProcessedCount++;
   const { data } = msg;
   switch (data.type) {
-    case 'GET_BOUNDING_CLIENT_RECT':
-      throw new Error('Not yet implemented');
-    case 'CANVAS':
+    case 'CANVAS_MEASURE':
     default:
       const textMetrics = measureText(canvas, data);
       (postMessage as PostMessage)({
