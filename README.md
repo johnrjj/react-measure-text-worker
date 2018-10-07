@@ -35,8 +35,10 @@ We built a declarative React UI component that is able to handle expensive measu
 `MeasureTextOffThread` renders as a "child as a function" component which provides a textData object to the children, which the children can then use to render however they would like.
 
 ```jsx
-const text = 'measure this text';
+import { MeasureTextOffThread } from 'measure-text-off-thread';
 
+// inside render...
+const text = 'measure this text';
 <MeasureTextOffThread
   text={text}
   fontSize={20}
