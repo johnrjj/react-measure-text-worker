@@ -5,6 +5,8 @@
 
 A React component that does expensive text measurements off the main thread and return results to the component's children.
 
+[Demo](https://measure-text-off-thread.surge.sh/)
+
 ### Context
 
 Three main ideas:

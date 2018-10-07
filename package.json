@@ -8,6 +8,7 @@
     "start": "parcel index.html --open",
     "build": "parcel build index.html",
     "build:lib": "parcel build src/index.ts",
+    "deploy": "npm run build && surge ./dist measure-text-off-thread.surge.sh",
     "prettier": "prettier --single-quote --print-width 100 --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css}'"
   },
   "devDependencies": {
