@@ -30,14 +30,7 @@ const defaultStyle = {
   leading: 0,
 };
 
-const genericFontFamilies = [
-  'serif',
-  'sans-serif',
-  'monospace',
-  'cursive',
-  'fantasy',
-  'system-ui',
-];
+const genericFontFamilies = ['serif', 'sans-serif', 'monospace', 'cursive', 'fantasy', 'system-ui'];
 
 export interface Foo {
   align: string;
@@ -58,9 +51,7 @@ class TextStyle {
   toFontString(): string {
     // build canvas api font setting from individual components. Convert a numeric this.fontSize to px
     const fontSizeString =
-      typeof this.style.fontSize === 'number'
-        ? `${this.style.fontSize}px`
-        : this.style.fontSize;
+      typeof this.style.fontSize === 'number' ? `${this.style.fontSize}px` : this.style.fontSize;
 
     // Clean-up fontFamily property by quoting each font name
     // this will support font names with spaces
@@ -72,10 +63,7 @@ class TextStyle {
       // Trim any extra white-space
       let fontFamily = fontFamilies[i].trim();
       // Check if font is already escaped in quotes except for CSS generic fonts
-      if (
-        !/([\"\'])[^\'\"]+\1/.test(fontFamily) &&
-        genericFontFamilies.indexOf(fontFamily) < 0
-      ) {
+      if (!/([\"\'])[^\'\"]+\1/.test(fontFamily) && genericFontFamilies.indexOf(fontFamily) < 0) {
         fontFamily = `"${fontFamily}"`;
       }
       fontFamilies[i] = fontFamily;

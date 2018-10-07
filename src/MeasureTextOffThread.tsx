@@ -17,10 +17,7 @@ export interface MeasureTextOffThreadProps {
   children: (state: MeasureTextOffThreadState) => string;
 }
 
-class MeasureTextOffThread extends Component<
-  MeasureTextOffThreadProps,
-  MeasureTextOffThreadState
-> {
+class MeasureTextOffThread extends Component<MeasureTextOffThreadProps, MeasureTextOffThreadState> {
   cache: LruCache<string, any>;
   constructor(props: any) {
     super(props);
@@ -36,11 +33,7 @@ class MeasureTextOffThread extends Component<
     this.measure();
   }
 
-  handleMessageFromWorker = ({
-    data,
-  }: {
-    data: WorkerMessageResponsePayload;
-  }) => {
+  handleMessageFromWorker = ({ data }: { data: WorkerMessageResponsePayload }) => {
     // todo: if no requests in flight, stop listening to worker messages
     this.setState({
       width: data.width,
