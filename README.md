@@ -63,7 +63,7 @@ const text = 'measure this text';
   <span>
     <div style={{ width: textData.width, height: textdata.height }}>
     	Do overlay here
-	</div>
+    </div>
     <span>{text}</span>
   </span>
 )}
