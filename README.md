@@ -1,13 +1,17 @@
 # MeasureTextOffThread
-## Overview
 
-### TL;DR
 
 An experimental React component that does expensive text measurements off the main thread and return results to the component's children.
 
 [Demo](https://measure-text-off-thread.surge.sh/)
 
-### Context
+## Context
+
+### Problem
+
+Require ability to dynamically measure text for width, height, and other style attributes off-thread without interacting with DOM.
+
+### Ideas
 
 Three main ideas:
 
@@ -19,9 +23,7 @@ Let's combine these three ideas in the context of an application that does signi
 
 More details on OffscreenCanvas with WebWorkers can be found [here](https://developers.google.com/web/updates/2018/08/offscreen-canvas)
 
-### Problem 
 
-Ability to dynamically measure text for width, height, and other style attributes off-thread without interacting with DOM.
 
 ### Solution - Declarative Approach
 
@@ -29,7 +31,19 @@ Ability to dynamically measure text for width, height, and other style attribute
 We built a declarative React UI component that is able to handle expensive measurments of text attributes off-thread in an asynchronusly and non-blocking, which then returns the requested measurements to the main thread for rendering via children components: ```</MeasureTextOffThread>```
 
 
-## Usage
+## Getting Started
+
+Clone the repo, install the dependencies, and run the dev environment. That's it!
+
+```js
+git clone https://github.com/johnrjj/measure-text-off-thread.git
+yarn intall
+yarn start
+```
+
+Navigate to [localhost:1234](localhost:1234) to see the app running
+
+## API
 
 
 `MeasureTextOffThread` renders as a "child as a function" component which provides a textData object to the children, which the children can then use to render however they would like.
@@ -39,7 +53,7 @@ import { MeasureTextOffThread } from 'measure-text-off-thread';
 
 const text = 'measure this text';
 
-// inside render()...
+// inside render...
 <MeasureTextOffThread
   text={text}
   fontSize={20}
@@ -49,12 +63,14 @@ const text = 'measure this text';
   <span>
     <div style={{ width: textData.width, height: textdata.height }}>
     	Do overlay here
-    </div>
+	</div>
     <span>{text}</span>
   </span>
 )}
 </MeasureTextOffThread>
 ```
+
+
 
 
 ## Architecture
