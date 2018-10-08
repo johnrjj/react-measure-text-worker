@@ -11,15 +11,15 @@ An experimental React component that performs expensive text measurements off th
 
 Require ability to dynamically measure text for width, height, and other style attributes off-thread without interacting with DOM.
 
-### Ideas
+### Concepts
 
-Three main ideas:
+Three main concepts:
 
 1. WebWorker work is done off the main UI thread.
 2. With the introduction of [OffscreenCanvas](https://developer.mozilla.org/en-US/docs/Web/API/OffscreenCanvas) in Chrome 69, we can now perform Canvas work in a WebWorker. 
 3. Inside a Canvas, you can do some powerful calculations on styles and positioning. 
 
-Let's combine these three ideas in the context of an application that does significant DOM or Canvas measuring. We can move the expensive calculations off the main thread by performing the same calculations inside a Canvas on a separate thread. This will allow the main thread (read: UI thread) to free up resources, and allow the main thread to run smoothly and maintain the required 60fps.
+Let's combine these three concepts in the context of an application that does significant DOM or Canvas measuring. We can move these expensive calculations off the main thread by performing the same calculations inside a Canvas on a separate thread via a WebWorker. This will allow the main thread (UI thread) to free up resources, and allow the main thread to run smoothly and maintain a desired 60fps.
 
 More details on OffscreenCanvas with WebWorkers can be found [here](https://developers.google.com/web/updates/2018/08/offscreen-canvas)
 
