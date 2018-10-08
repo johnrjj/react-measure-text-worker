@@ -5,7 +5,7 @@ An experimental React component that performs expensive text measurements off th
 
 [Demo](https://measure-text-off-thread.surge.sh/)
 
-## Context
+## Background
 
 ### Problem
 
