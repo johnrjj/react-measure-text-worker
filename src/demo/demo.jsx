@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { MeasureTextOffThread } from '../MeasureTextOffThread.tsx';
+import { Cube } from './Cube';
 import './reset.css';
 import './styles.css';
 
@@ -63,9 +64,9 @@ const Container = ({ children, ...rest }) => (
 );
 
 const Content = ({ children, style, ...rest }) => (
-  <span style={{ display: 'inline-block', position: 'relative', ...style }} {...rest}>
+  <pre style={{ display: 'inline-block', position: 'relative', ...style }} {...rest}>
     {children}
-  </span>
+  </pre>
 );
 
 class Demo extends Component {
@@ -106,6 +107,20 @@ class Demo extends Component {
             )}
           </MeasureTextOffThread>
           <span> after</span>
+        </div>
+
+        <div style={{ marginBottom: '128px' }}>
+          <MeasureTextOffThread
+            text={this.state.inputText || ' '}
+            fontSize={fontSize}
+            fontFamily={fontFamily}
+          >
+            {({ width, height }) => (
+              <Container>
+                <Cube>{this.state.inputText}</Cube>
+              </Container>
+            )}
+          </MeasureTextOffThread>
         </div>
       </div>
     );

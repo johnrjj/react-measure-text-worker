@@ -21,7 +21,7 @@ export interface ITextMetrics {
 }
 
 // Based on TextMetrics in Pixi.js's Canvas Engine
-class TextMetrics implements ITextMetrics {
+class TextMetricsV2 implements ITextMetrics {
   constructor(
     public text: string,
     public style: TextStyle,
@@ -37,18 +37,19 @@ class TextMetrics implements ITextMetrics {
   static measureText(
     text: string,
     styleObj: TextStyle,
-    wordWrap: boolean,
+    shouldWordWrap: boolean,
     canvas: HTMLCanvasElement
-  ): TextMetrics {
+  ): TextMetricsV2 {
     const { style } = styleObj;
-    wordWrap = wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
+    // wordWrap = wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
+    const wordWrap = !!shouldWordWrap || !!style.wordWrap;
     const font = styleObj.toFontString();
-    const fontProperties = TextMetrics.measureFont(font);
+    const fontProperties = TextMetricsV2.measureFont(font);
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
     context.font = font;
 
-    const outputText = wordWrap ? TextMetrics.wordWrap(text, style, canvas) : text;
+    const outputText = wordWrap ? TextMetricsV2.wordWrap(text, style, canvas) : text;
     const lines = outputText.split(/(?:\r\n|\r|\n)/);
     const lineWidths = new Array(lines.length);
     let maxLineWidth = 0;
@@ -75,7 +76,7 @@ class TextMetrics implements ITextMetrics {
       height += style.dropShadowDistance;
     }
 
-    return new TextMetrics(
+    return new TextMetricsV2(
       text,
       style,
       width,
@@ -92,10 +93,10 @@ class TextMetrics implements ITextMetrics {
    * Applies newlines to a string to have it optimally fit into the horizontal
    * bounds set by the Text object's wordWrapWidth property.
    */
-  static wordWrap(text: string, styleObj: TextStyle, canvas: HTMLCanvasElement): string {
+  static wordWrap(text: string, style: any, canvas: HTMLCanvasElement): string {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-    const { style } = styleObj;
+    // const { style } = styleObj;
     let width = 0;
     let line = '';
     let lines = '';
@@ -104,8 +105,8 @@ class TextMetrics implements ITextMetrics {
     const { letterSpacing, whiteSpace } = style;
 
     // How to handle whitespaces
-    const collapseSpaces = TextMetrics.collapseSpaces(whiteSpace);
-    const collapseNewlines = TextMetrics.collapseNewlines(whiteSpace);
+    const collapseSpaces = TextMetricsV2.collapseSpaces(whiteSpace);
+    const collapseNewlines = TextMetricsV2.collapseNewlines(whiteSpace);
 
     // whether or not spaces may be added to the beginning of lines
     let canPrependSpaces = !collapseSpaces;
@@ -119,17 +120,17 @@ class TextMetrics implements ITextMetrics {
     const wordWrapWidth = style.wordWrapWidth + letterSpacing;
 
     // break text into words, spaces and newline chars
-    const tokens = TextMetrics.tokenize(text);
+    const tokens = TextMetricsV2.tokenize(text);
 
     for (let i = 0; i < tokens.length; i++) {
       // get the word, space or newlineChar
       let token = tokens[i];
 
       // if word is a new line
-      if (TextMetrics.isNewline(token)) {
+      if (TextMetricsV2.isNewline(token)) {
         // keep the new line
         if (!collapseNewlines) {
-          lines += TextMetrics.addLine(line);
+          lines += TextMetricsV2.addLine(line);
           canPrependSpaces = !collapseSpaces;
           line = '';
           width = 0;
@@ -144,8 +145,8 @@ class TextMetrics implements ITextMetrics {
       // if we should collapse repeated whitespaces
       if (collapseSpaces) {
         // check both this and the last tokens for spaces
-        const currIsBreakingSpace = TextMetrics.isBreakingSpace(token);
-        const lastIsBreakingSpace = TextMetrics.isBreakingSpace(line[line.length - 1]);
+        const currIsBreakingSpace = TextMetricsV2.isBreakingSpace(token);
+        const lastIsBreakingSpace = TextMetricsV2.isBreakingSpace(line[line.length - 1]);
 
         if (currIsBreakingSpace && lastIsBreakingSpace) {
           continue;
@@ -153,20 +154,20 @@ class TextMetrics implements ITextMetrics {
       }
 
       // get word width from cache if possible
-      const tokenWidth = TextMetrics.getFromCache(token, letterSpacing, cache, context);
+      const tokenWidth = TextMetricsV2.getFromCache(token, letterSpacing, cache, context);
 
       // word is longer than desired bounds
       if (tokenWidth > wordWrapWidth) {
         // if we are not already at the beginning of a line
         if (line !== '') {
           // start newlines for overflow words
-          lines += TextMetrics.addLine(line);
+          lines += TextMetricsV2.addLine(line);
           line = '';
           width = 0;
         }
 
         // break large word over multiple lines
-        if (TextMetrics.canBreakWords(token, style.breakWords)) {
+        if (TextMetricsV2.canBreakWords(token, style.breakWords)) {
           // break word into characters
           const characters = token.split('');
 
@@ -182,7 +183,7 @@ class TextMetrics implements ITextMetrics {
               const lastChar = char[char.length - 1];
 
               // should not split chars
-              if (!TextMetrics.canBreakChars(lastChar, nextChar, token, j, style.breakWords)) {
+              if (!TextMetricsV2.canBreakChars(lastChar, nextChar, token, j, style.breakWords)) {
                 // combine chars & move forward one
                 char += nextChar;
               } else {
@@ -194,10 +195,10 @@ class TextMetrics implements ITextMetrics {
 
             j += char.length - 1;
 
-            const characterWidth = TextMetrics.getFromCache(char, letterSpacing, cache, context);
+            const characterWidth = TextMetricsV2.getFromCache(char, letterSpacing, cache, context);
 
             if (characterWidth + width > wordWrapWidth) {
-              lines += TextMetrics.addLine(line);
+              lines += TextMetricsV2.addLine(line);
               canPrependSpaces = false;
               line = '';
               width = 0;
@@ -213,7 +214,7 @@ class TextMetrics implements ITextMetrics {
           // if there are words in this line already
           // finish that line and start a new one
           if (line.length > 0) {
-            lines += TextMetrics.addLine(line);
+            lines += TextMetricsV2.addLine(line);
             line = '';
             width = 0;
           }
@@ -221,7 +222,7 @@ class TextMetrics implements ITextMetrics {
           const isLastToken = i === tokens.length - 1;
 
           // give it its own line if it's not the end
-          lines += TextMetrics.addLine(token, !isLastToken);
+          lines += TextMetricsV2.addLine(token, !isLastToken);
           canPrependSpaces = false;
           line = '';
           width = 0;
@@ -237,7 +238,7 @@ class TextMetrics implements ITextMetrics {
           canPrependSpaces = false;
 
           // add a new line
-          lines += TextMetrics.addLine(line);
+          lines += TextMetricsV2.addLine(line);
 
           // start a new line
           line = '';
@@ -245,7 +246,7 @@ class TextMetrics implements ITextMetrics {
         }
 
         // don't add spaces to the beginning of lines
-        if (line.length > 0 || !TextMetrics.isBreakingSpace(token) || canPrependSpaces) {
+        if (line.length > 0 || !TextMetricsV2.isBreakingSpace(token) || canPrependSpaces) {
           // add the word to the current line
           line += token;
 
@@ -255,13 +256,13 @@ class TextMetrics implements ITextMetrics {
       }
     }
 
-    lines += TextMetrics.addLine(line, false);
+    lines += TextMetricsV2.addLine(line, false);
 
     return lines;
   }
 
   static addLine(line: string, newLine: boolean = true): string {
-    line = TextMetrics.trimRight(line);
+    line = TextMetricsV2.trimRight(line);
     line = newLine ? `${line}\n` : line;
     return line;
   }
@@ -299,7 +300,7 @@ class TextMetrics implements ITextMetrics {
     }
     for (let i = text.length - 1; i >= 0; i--) {
       const char = text[i];
-      if (!TextMetrics.isBreakingSpace(char)) {
+      if (!TextMetricsV2.isBreakingSpace(char)) {
         break;
       }
       text = text.slice(0, -1);
@@ -334,7 +335,7 @@ class TextMetrics implements ITextMetrics {
 
     for (let i = 0; i < text.length; i++) {
       const char = text[i];
-      if (TextMetrics.isBreakingSpace(char) || TextMetrics.isNewline(char)) {
+      if (TextMetricsV2.isBreakingSpace(char) || TextMetricsV2.isNewline(char)) {
         if (token !== '') {
           tokens.push(token);
           token = '';
@@ -466,4 +467,4 @@ const BREAKING_SPACES = [
   0x3000, // ideographic space
 ];
 
-export { TextMetrics };
+export { TextMetricsV2 };

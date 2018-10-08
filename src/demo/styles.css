@@ -34,3 +34,60 @@ body {
   box-shadow: 1px 1px 20px 0px rgba(0, 0, 0, 0.6);
   transition: width 2s, height 2s, background-color 2s, transfom 1.25s;
 }
+
+.wrap {
+  perspective: 800px;
+  perspective-origin: 50% 100px;
+}
+
+.cube {
+  position: relative;
+  width: 200px;
+  transform-style: preserve-3d;
+}
+
+.cube div {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: linear-gradient(135deg, rgb(115, 165, 255), rgb(84, 119, 245));
+  opacity: 0.7;
+  border: 1px solid black;
+  will-change: transform;
+}
+
+.back {
+  transform: translateZ(-100px) rotateY(180deg);
+}
+.right {
+  transform: rotateY(-270deg) translateX(100px);
+  transform-origin: top right;
+}
+.left {
+  transform: rotateY(270deg) translateX(-100px);
+  transform-origin: center left;
+}
+.top {
+  transform: rotateX(-90deg) translateY(-100px);
+  transform-origin: top center;
+}
+.bottom {
+  transform: rotateX(90deg) translateY(100px);
+  transform-origin: bottom center;
+}
+.front {
+  transform: translateZ(100px);
+}
+
+@keyframes spin {
+  from {
+    transform: rotateY(0);
+  }
+  to {
+    transform: rotateY(360deg);
+  }
+}
+
+.cube {
+  animation: spin 5s infinite linear;
+}

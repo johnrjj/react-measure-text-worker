@@ -79,5 +79,5 @@ const unusedStyles = {
   textBaseline: 'alphabetic',
   trim: false,
   wordWrap: false,
-  wordWrapWidth: 100,
+  wordWrapWidth: 200,
 };

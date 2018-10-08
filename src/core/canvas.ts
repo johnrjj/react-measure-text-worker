@@ -1,4 +1,4 @@
-import { TextMetrics } from './canvas-text-measure';
+import { TextMetricsV2 } from './canvas-text-measure';
 import { TextStyle } from './canvas-text-style';
 
 function builtInMeasureText(
@@ -16,8 +16,11 @@ function measureText(
   const style = new TextStyle({
     fontFamily,
     fontSize,
+    breakWords: false,
+    wordWrap: false,
+    wordWrapWidth: 200,
   });
-  return TextMetrics.measureText(text, style, false, canvas);
+  return TextMetricsV2.measureText(text, style, false, canvas);
 }
 
 export { builtInMeasureText, measureText };

@@ -5,8 +5,8 @@
   "author": "John Johnson <johnrjj@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "start": "parcel index.html --open",
-    "build": "parcel build index.html",
+    "start": "parcel src/demo/index.html --open",
+    "build": "parcel build src/demo/index.html",
     "build:lib": "parcel build src/index.ts",
     "deploy": "npm run build && surge ./dist measure-text-off-thread.surge.sh",
     "prettier": "prettier --single-quote --print-width 100 --trailing-comma es5 --write 'src/**/*.{js,jsx,ts,tsx,css}'"
@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.0.8",
     "parcel-bundler": "^1.10.2",
     "prettier": "^1.14.3",
+    "styled-components": "^3.4.9",
     "surge": "^0.20.1",
     "typescript": "^3.1.1"
   },

@@ -1,4 +1,5 @@
 import { measureText } from './core/canvas';
+import { TextMetricsV2 } from './core/canvas-text-measure';
 
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
 let messagesProcessedCount = 0;
@@ -31,11 +32,10 @@ onmessage = (msg: WorkerMessageRequest) => {
   switch (data.type) {
     case 'CANVAS_MEASURE':
     default:
-      const textMetrics = measureText(canvas, data);
+      const textMetrics: TextMetricsV2 = measureText(canvas, data);
       (postMessage as PostMessage)({
+        ...textMetrics,
         input: data,
-        width: textMetrics.width,
-        height: textMetrics.height,
         workerJobId: messagesProcessedCount,
       } as WorkerMessageResponsePayload);
       return;
