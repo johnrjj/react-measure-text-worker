@@ -1,7 +1,7 @@
-# MeasureTextOffThread
+# Measure Text Off Thread
 
 
-An experimental React component that does expensive text measurements off the main thread and return results to the component's children.
+An experimental React component that performs expensive text measurements off the main thread and return results to the component's children.
 
 [Demo](https://measure-text-off-thread.surge.sh/)
 
@@ -46,7 +46,7 @@ Navigate to [localhost:1234](localhost:1234) to see the app running
 ## API
 
 
-`MeasureTextOffThread` renders as a "child as a function" component which provides a textData object to the children, which the children can then use to render however they would like.
+`MeasureTextOffThread` renders a "child as a function" component which provides a textData object to the children, which the children can then use to render however they would like.
 
 ```jsx
 import { MeasureTextOffThread } from 'measure-text-off-thread';
@@ -69,8 +69,6 @@ const text = 'measure this text';
 )}
 </MeasureTextOffThread>
 ```
-
-
 
 
 ## Architecture
@@ -102,3 +100,10 @@ const text = 'measure this text';
 	│        children         │                                                                              
 	│                         │                 │                                                            
 	└─────────────────────────┘                                                                              
+
+
+
+
+## Performance
+
+🔥 It's really fast.
