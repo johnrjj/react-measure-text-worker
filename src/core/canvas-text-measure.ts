@@ -4,17 +4,18 @@ const METRICS_STRING = '|Éq';
 const BASELINE_SYMBOL = 'M';
 const BASELINE_MULTIPLIER = 1.4;
 
+// todo: DI
 const canvas: HTMLCanvasElement = new OffscreenCanvas(100, 100);
 const context: CanvasRenderingContext2D = canvas.getContext('2d') as CanvasRenderingContext2D;
-let fonts: any = {};
+let fontsCache: any = {};
 
 export interface ITextMetrics {
   text: string; // text that was measured
   style: TextStyle; // style that was measured
   width: number; // measured width of the text
   height: number; // measured height of the text
-  lines: Array<any>; // an array of the lines of text broken by new lines and wrapping if specified in style
-  lineWidths: Array<any>; // an array of the line widths for each line matched to `lines`
+  lines: Array<string>; // an array of the lines of text broken by new lines and wrapping if specified in style
+  lineWidths: Array<number>; // an array of the line widths for each line matched to `lines`
   lineHeight: number; // measured line height for this style
   maxLineWidth: number; // maximum line width for all measured lines
   fontProperties: any; // font properties object from TextMetrics.measureFont
@@ -368,8 +369,8 @@ class TextMetricsV2 implements ITextMetrics {
   // Calculates the ascent, descent and fontSize of a given font-style
   static measureFont(font: string) {
     // as this method is used for preparing assets, don't recalculate things if we don't need to
-    if (fonts[font]) {
-      return fonts[font];
+    if (fontsCache[font]) {
+      return fontsCache[font];
     }
     const properties: any = {};
     context.font = font;
@@ -439,7 +440,7 @@ class TextMetricsV2 implements ITextMetrics {
     properties.descent = i - baseline;
     properties.fontSize = properties.ascent + properties.descent;
 
-    fonts[font] = properties;
+    fontsCache[font] = properties;
 
     return properties;
   }
