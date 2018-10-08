@@ -1,4 +1,4 @@
-# Measure Text Off Thread
+# react-measure-text-webworker
 
 
 An experimental React component that performs expensive text measurements off the main thread and return results to the component's children.
@@ -27,7 +27,7 @@ More details on OffscreenCanvas with WebWorkers can be found [here](https://deve
 
 ### Solution - Declarative Approach
 
-#### ```</MeasureTextOffThread>```
+#### ```</MeasureTextWebworker>```
 
 A React component that is able to handle expensive measurments of text attributes off-thread in a WebWorker, which then returns the requested measurements to the main thread for rendering via children components: 
 
@@ -38,7 +38,7 @@ A React component that is able to handle expensive measurments of text attribute
 Clone the repo, install the dependencies, and run the dev environment. That's it!
 
 ```js
-git clone https://github.com/johnrjj/measure-text-off-thread.git
+git clone https://github.com/johnrjj/react-measure-text-webworker.git
 yarn install
 yarn start
 ```
@@ -48,15 +48,15 @@ Navigate to [localhost:1234](localhost:1234) to see the app running
 ## API
 
 
-`MeasureTextOffThread` renders a "child as a function" component which provides a textData object to the children, which the children can then use to render however they would like.
+`MeasureTextWebWorker` renders a "child as a function" component which provides a textData object to the children, which the children can then use to render however they would like.
 
 ```jsx
-import { MeasureTextOffThread } from 'measure-text-off-thread';
+import { MeasureTextWebWorker } from 'react-measure-text-webworker';
 
 const text = 'measure this text';
 
 // inside render...
-<MeasureTextOffThread
+<MeasureTextWebWorker
   text={text}
   fontSize={20}
   fontFamily={'Arial'}
@@ -69,7 +69,7 @@ const text = 'measure this text';
     <span>{text}</span>
   </span>
 )}
-</MeasureTextOffThread>
+</MeasureTextWebWorker>
 ```
 
 
@@ -87,7 +87,7 @@ const text = 'measure this text';
 	             ▼                request to    │     │                 │                                    
 	┌─────────────────────────┐    webworker          │    WebWorker    │                                    
 	│                         │─────────────────┼────▶│    onmessage    │────────────────────┐               
-	│ </MeasureTextOffThread> │◀────────┐             │                 │                    ▼               
+	│ </MeasureTextWebWorker> │◀────────┐             │                 │                    ▼               
 	│                         │         │       │     └─────────────────┘          ┌──────────────────┬─────┐
 	└─────────────────────────┘         │                                          │                  │     │
 	             │                      │       │                                  │ Worker processes │ LRU │
