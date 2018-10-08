@@ -1,4 +1,4 @@
-# react-measure-text-worker 📐
+# 📏 react-measure-text-worker 📐
 
 
 An experimental React component that performs expensive text measurements off the main thread and return results to the component's children.
