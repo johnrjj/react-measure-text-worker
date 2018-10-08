@@ -48,7 +48,7 @@ Navigate to [localhost:1234](localhost:1234) to see the app running
 ## API
 
 
-`MeasureTextWorker` renders a "child as a function" component which provides a textData object to the children, which the children can then use to render however they would like.
+`MeasureTextWorker` renders a "child as a function" pattern which provides a textData object to the children, which the children can then use to render however they would like.
 
 ```jsx
 import { MeasureTextWorker } from 'react-measure-text-worker';
