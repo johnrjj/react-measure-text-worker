@@ -27,7 +27,7 @@ More details on OffscreenCanvas with WebWorkers can be found [here](https://deve
 
 ### Solution - Declarative Approach
 
-```</MeasureTextOffThread>```
+#### ```</MeasureTextOffThread>```
 
 A React component that is able to handle expensive measurments of text attributes off-thread in a WebWorker, which then returns the requested measurements to the main thread for rendering via children components: 
 
@@ -39,7 +39,7 @@ Clone the repo, install the dependencies, and run the dev environment. That's it
 
 ```js
 git clone https://github.com/johnrjj/measure-text-off-thread.git
-yarn intall
+yarn install
 yarn start
 ```
 
