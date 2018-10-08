@@ -27,9 +27,9 @@ More details on OffscreenCanvas with WebWorkers can be found [here](https://deve
 
 ### Solution - Declarative Approach
 
-#### ```</MeasureTextWorker>```
+#### ```<MeasureTextWorker/>```
 
-A React component that is able to handle expensive measurments of text attributes off-thread in a WebWorker, which then returns the requested measurements to the main thread for rendering via children components: 
+A React component that is able to handle expensive measurments of text attributes off-thread in a WebWorker, which then returns the requested measurements to the main thread for handing off to child components. 
 
 
 
