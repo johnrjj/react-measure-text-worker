@@ -18,10 +18,8 @@ export interface MeasureTextOffThreadProps {
 }
 
 class MeasureTextOffThread extends Component<MeasureTextOffThreadProps, MeasureTextOffThreadState> {
-  cache: LruCache<string, any>;
   constructor(props: any) {
     super(props);
-    this.cache = new LruCache<string, any>();
     this.state = {
       width: 0,
       height: 0,
