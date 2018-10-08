@@ -57,7 +57,7 @@ const text = 'measure this text';
 <MeasureTextOffThread
   text={text}
   fontSize={20}
-  fontFamily={'Times'}
+  fontFamily={'Arial'}
 >
 {textData => (
   <span>
