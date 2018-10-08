@@ -29,7 +29,7 @@ More details on OffscreenCanvas with WebWorkers can be found [here](https://deve
 
 ```</MeasureTextOffThread>```
 
-A declarative React UI component that is able to handle expensive measurments of text attributes off-thread in a WebWorker, which then returns the requested measurements to the main thread for rendering via children components: 
+A React component that is able to handle expensive measurments of text attributes off-thread in a WebWorker, which then returns the requested measurements to the main thread for rendering via children components: 
 
 
 
