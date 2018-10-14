@@ -27,7 +27,7 @@ More details on OffscreenCanvas with WebWorkers can be found [here](https://deve
 
 ### Solution - Declarative Approach
 
-#### ```<MeasureTextWorker/>```
+#### ```<MeasureTextOffThread/>```
 
 A React component that is able to handle expensive measurments of text attributes off-thread in a WebWorker, which then returns the requested measurements to the main thread for handing off to child components. 
 
@@ -48,15 +48,15 @@ Navigate to [localhost:1234](localhost:1234) to see the app running
 ## API
 
 
-`MeasureTextWorker` renders a "child as a function" pattern which provides a textData object to the children, which the children can then use to render however they would like.
+`MeasureTextOffThread` renders a "child as a function" pattern which provides a textData object to the children, which the children can then use to render however they would like.
 
 ```jsx
-import { MeasureTextWorker } from 'react-measure-text-worker';
+import { MeasureTextOffThread } from 'react-measure-text-ofd-threaf';
 
 const text = 'measure this text';
 
 // inside render...
-<MeasureTextWorker
+<MeasureTextOffThread
   text={text}
   fontSize={20}
   fontFamily={'Arial'}
@@ -69,12 +69,11 @@ const text = 'measure this text';
     <span>{text}</span>
   </span>
 )}
-</MeasureTextWorker>
+</MeasureTextOffThread>
 ```
 
 
 ## Architecture
-
 	       ┌───────────┐                                                                                     
 	       │           │                                                                                     
 	       │    App    │                     thread                                                          
@@ -87,7 +86,7 @@ const text = 'measure this text';
 	             ▼                request to    │     │                 │                                    
 	┌─────────────────────────┐    webworker          │    WebWorker    │                                    
 	│                         │─────────────────┼────▶│    onmessage    │────────────────────┐               
-	│  </MeasureTextWorker>   │◀────────┐             │                 │                    ▼               
+	│ </MeasureTextOffThread> │◀────────┐             │                 │                    ▼               
 	│                         │         │       │     └─────────────────┘          ┌──────────────────┬─────┐
 	└─────────────────────────┘         │                                          │                  │     │
 	             │                      │       │                                  │ Worker processes │ LRU │
@@ -102,7 +101,6 @@ const text = 'measure this text';
 	│        children         │                                                                              
 	│                         │                 │                                                            
 	└─────────────────────────┘                                                                              
-
 
 
 
