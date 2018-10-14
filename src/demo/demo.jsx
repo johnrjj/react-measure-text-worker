@@ -114,7 +114,7 @@ class Demo extends Component {
 
     return (
       <div>
-        <Title>Measure Text Offthread Demo</Title>
+        <Title>Measure Text Off-Thread Demo</Title>
         <DemoContainer fontSize={fontSize}>
           <MeasureTextOffThread text={typedText || ' '} fontSize={fontSize} fontFamily={fontFamily}>
             {({ width, height }) => (
