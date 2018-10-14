@@ -51,7 +51,7 @@ Navigate to [localhost:1234](localhost:1234) to see the app running
 `MeasureTextOffThread` renders a "child as a function" pattern which provides a textData object to the children, which the children can then use to render however they would like.
 
 ```jsx
-import { MeasureTextOffThread } from 'react-measure-text-ofd-threaf';
+import { MeasureTextOffThread } from 'react-measure-text-off-thread';
 
 const text = 'measure this text';
 
