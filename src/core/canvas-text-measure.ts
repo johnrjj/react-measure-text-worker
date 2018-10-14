@@ -42,7 +42,6 @@ class TextMetricsV2 implements ITextMetrics {
     canvas: HTMLCanvasElement
   ): TextMetricsV2 {
     const { style } = styleObj;
-    // wordWrap = wordWrap === undefined || wordWrap === null ? style.wordWrap : wordWrap;
     const wordWrap = !!shouldWordWrap || !!style.wordWrap;
     const font = styleObj.toFontString();
     const fontProperties = TextMetricsV2.measureFont(font);
@@ -97,7 +96,6 @@ class TextMetricsV2 implements ITextMetrics {
   static wordWrap(text: string, style: any, canvas: HTMLCanvasElement): string {
     const context = canvas.getContext('2d') as CanvasRenderingContext2D;
 
-    // const { style } = styleObj;
     let width = 0;
     let line = '';
     let lines = '';

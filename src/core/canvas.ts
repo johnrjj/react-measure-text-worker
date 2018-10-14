@@ -16,9 +16,6 @@ function measureText(
   const style = new TextStyle({
     fontFamily,
     fontSize,
-    breakWords: false,
-    wordWrap: false,
-    wordWrapWidth: 200,
   });
   return TextMetricsV2.measureText(text, style, false, canvas);
 }
