@@ -9,8 +9,6 @@ import './styles.css';
 
 const Highlight = ({ width, height }) => (
   <div
-    pose={'thumbnail'}
-    width={width}
     style={{
       position: 'absolute',
       backgroundColor: 'yellow',
@@ -44,7 +42,6 @@ const Tooltip = ({ width, height, children }) => (
       display: 'flex',
       boxSizing: 'border-box',
       justifyContent: 'center',
-      // alignItems: 'center',
       fontSize: '20px',
       position: 'absolute',
       padding: '16px',
